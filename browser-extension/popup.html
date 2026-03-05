@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PhishGuard AI</title>
+    <style>
+        body {
+            width: 300px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0c;
+            color: #fff;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #1f1f23;
+            padding-bottom: 12px;
+        }
+        .logo { color: #8b5cf6; font-weight: bold; font-size: 1.1rem; }
+        .status-box {
+            padding: 12px;
+            border-radius: 8px;
+            background: #121216;
+            text-align: center;
+            border: 1px solid #1f1f23;
+        }
+        .status-safe { color: #10b981; border-color: #10b98133; }
+        .status-phish { color: #f43f5e; border-color: #f43f5e33; }
+        button {
+            background: #8b5cf6;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="logo">PhishGuard AI</span>
+        </div>
+        <div id="status" class="status-box">
+            Analyzing current tab...
+        </div>
+        <button id="scanBtn">Quick Scan</button>
+        <div style="font-size: 10px; color: #555; text-align: center;">
+            Powered by Random Forest ML
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
