@@ -1,17 +1,33 @@
 {
-  "devDependencies": {
-    "autoprefixer": "^10.4.27",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^4.2.1"
+  "name": "phishguard-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.13.6",
-    "chart.js": "^4.5.1",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.35.0",
-    "lucide-react": "^0.577.0",
-    "react-chartjs-2": "^5.3.1",
-    "react-router-dom": "^7.13.1",
-    "tailwind-merge": "^3.5.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.22.3",
+    "lucide-react": "^0.363.0",
+    "framer-motion": "^11.0.24",
+    "chart.js": "^4.4.2",
+    "react-chartjs-2": "^5.2.0",
+    "axios": "^1.6.8",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.2.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.2.2"
   }
 }
