@@ -8,8 +8,11 @@ export default defineConfig({
         port: 5173,
         proxy: {
             '/scan': 'http://localhost:5000',
+            '/predict': 'http://localhost:5000',
             '/history': 'http://localhost:5000',
             '/analytics': 'http://localhost:5000',
+            '/train': 'http://localhost:5000',
+            '/upload_dataset': 'http://localhost:5000',
         }
     }
 })

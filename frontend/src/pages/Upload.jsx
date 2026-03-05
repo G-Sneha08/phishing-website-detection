@@ -9,12 +9,22 @@ const UploadDataset = () => {
     const [isUploading, setIsUploading] = useState(false);
     const [uploadComplete, setUploadComplete] = useState(false);
 
-    const handleUpload = () => {
+    const handleUpload = async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('file', file);
+
         setIsUploading(true);
-        setTimeout(() => {
-            setIsUploading(false);
+        try {
+            await uploadDataset(formData);
             setUploadComplete(true);
-        }, 2000);
+        } catch (error) {
+            console.error("Upload failed", error);
+        } finally {
+            setIsUploading(false);
+        }
     };
 
     return (
@@ -25,20 +35,23 @@ const UploadDataset = () => {
                     <h1 className="text-4xl font-extrabold mb-4">Batch <span className="text-primary">URL Analysis</span></h1>
                     <p className="text-zinc-400 mb-12">Upload a CSV dataset containing URLs for bulk phishing detection.</p>
 
-                    <div className="glass-card p-12 text-center border-2 border-dashed border-zinc-800 hover:border-primary/50 transition-colors cursor-pointer group">
+                    <label className="glass-card p-12 text-center border-2 border-dashed border-zinc-800 hover:border-primary/50 transition-colors cursor-pointer group block">
+                        <input
+                            type="file"
+                            className="hidden"
+                            onChange={handleUpload}
+                            accept=".csv,.txt"
+                            disabled={isUploading}
+                        />
                         <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-6 group-hover:scale-110 transition-transform">
                             <UploadIcon className="w-8 h-8" />
                         </div>
                         <h3 className="text-xl font-bold mb-2">Select Dataset File</h3>
                         <p className="text-zinc-500 mb-8">CSV or TXT files supported (max 50MB)</p>
-                        <button
-                            onClick={handleUpload}
-                            disabled={isUploading}
-                            className="cyber-button-primary"
-                        >
+                        <div className="cyber-button-primary inline-block">
                             {isUploading ? 'Processing...' : 'Upload & Analyze'}
-                        </button>
-                    </div>
+                        </div>
+                    </label>
 
                     {uploadComplete && (
                         <motion.div

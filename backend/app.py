@@ -41,6 +41,7 @@ def save_to_history(url, result):
         json.dump(history[:50], f) # Keep last 50
 
 @app.route('/scan', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def scan_url():
     data = request.json
     url = data.get('url')
@@ -53,6 +54,7 @@ def scan_url():
 
     # 1. Feature Extraction
     features = feature_extractor.get_features_list(url)
+    features_dict = feature_extractor.extract_features(url)
     
     # 2. Prediction
     prob = model.predict_proba([features])[0][1]
@@ -68,9 +70,12 @@ def scan_url():
         "url": url,
         "prediction": prediction,
         "probability": f"{prob:.2%}",
+        "confidence": float(prob),
         "raw_prob": float(prob),
         "explanations": explanations,
-        "threat_intel": threats
+        "threat_intel": threats,
+        "threat_database": threats, # Alias for consistency
+        "features": features_dict
     }
     
     save_to_history(url, result)
@@ -116,4 +121,4 @@ def upload_dataset():
     return jsonify({"message": "File received. Batch prediction simulated.", "count": 120})
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)

@@ -19,19 +19,15 @@ class ModelExplainer:
         # SHAP explanation for a single prediction
         X = pd.DataFrame([features_list], columns=self.feature_names)
         
-        # Determine explainer type based on model
-        if hasattr(self.model, "tree"): # For RF or XGBoost
-            explainer = shap.TreeExplainer(self.model)
-        else:
-            explainer = shap.KernelExplainer(self.model.predict_proba, shap.sample(X, 10))
-            
-        shap_values = explainer.shap_values(X)
+        # Use the unified Explainer API
+        explainer = shap.Explainer(self.model, X)
+        shap_values = explainer(X)
         
-        # For binary classification, shap_values might be a list (index 1 is phishing)
-        if isinstance(shap_values, list):
-            sv = shap_values[1][0]
+        # Extract values for the phishing class (index 1) if available, otherwise index 0
+        if len(shap_values.values.shape) == 3: # Multi-class or binary with 2 outputs
+            sv = shap_values.values[0, :, 1]
         else:
-            sv = shap_values[0]
+            sv = shap_values.values[0]
 
         # Combine feature names with their SHAP values
         explanations = []
